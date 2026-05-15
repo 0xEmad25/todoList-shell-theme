@@ -8,7 +8,7 @@ commands to use are:
 
 `ls`: to show all items in the list.
 
-`ls`: to list all commands.
+`help`: to list all commands.
 
 `exit`: to close the program
 
