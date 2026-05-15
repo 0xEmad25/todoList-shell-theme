@@ -8,6 +8,8 @@ commands to use are:
 
 `ls`: to show all items in the list.
 
+`ls`: to list all commands.
+
 `exit`: to close the program
 
 | commands | explanation |
@@ -15,4 +17,5 @@ commands to use are:
 | add | add a new item to the list |
 | done [num]| delete an item from the list with the index |
 | ls | show all items in the list |
+| help | list all commands |
 | exit | close the program |

@@ -1,47 +1,44 @@
-use std::io::{self, Write};
-
-fn add(mut temp: Vec<&str>) -> String{
-    temp.remove(0);
-    return temp.join(" ");
-}
+use std::{io::{self, Write}, usize};
 
 
-fn main() {
-    let mut list: Vec<String> = vec!["Emad".to_string()];
+fn main(){
+    let mut list: Vec<String> = vec!["test".to_string()];
     loop{
         print!(">");
-        io::stdout().flush().unwrap();
+        io::stdout().flush().expect("There is a problem on the flush");
 
-        let mut input = String::new();
-        io::stdin().read_line(&mut input).expect("the input wrong some how!!!");
-        let temp: Vec<&str> = input.trim().split(" ").collect();
-        if temp[0] == "add" {
-            let x = add(temp);
-            list.push(x.clone());
-            println!("{} added to the list!", x);
-        }
-        else if temp[0] == "ls"{
-            for i in &list{
-                println!("{}", i);
-            }
-        }
-        else if temp[0] == "exit"{
-            break;
-        }
-        else if temp[0] == "done" {
-            let num = temp[1].parse::<usize>().unwrap();
-            if list.len() <= 0{
-                println!("the list is empty");
-                continue;
-            }
-            else if num > list.len(){
-                println!("the number is higher than what is inside the list!");
-            }
-            else{
-                list.remove(num);
-                println!("{} has been deleted!", num);
-            }
+        let mut input: String = String::new();
+        io::stdin().read_line(&mut input).expect("The input is wrong fix it");
+        let mut rest: Vec<&str> = input.split_whitespace().collect();
+        let command = rest[0];
+        rest.remove(0);
+        let sentence = rest.join(" ");
+        match command {
+            "exit" => break,
+            "ls" => {
+                for i in &list{
+                    println!("{}", i);
+                }
+            },
+            "add" => {
+                println!("{} has been added to the list.", sentence);
+                list.push(sentence);
+            },
+            "done" => {
+                match sentence.parse::<usize>() {
+                    Ok(num) => {if num < list.len() {
+                        println!("{} has been deleted from the list.", list[num]);
+                        list.remove(num);
+                    } else {
+                        println!("Number is out of range");
+                    }
+                },
+                    Err(_) => println!("Invalid number"),
+                }
+            },
+            "help" => println!("commands you can use\nls: show all items in the list\nadd: add a new item to the list\ndone [num]: delete an item from the list with the index\nexit: close the program"),
+            _ => println!("Invalid command please try again you can use help to list commnds"),
         }
     }
-}
 
+}
